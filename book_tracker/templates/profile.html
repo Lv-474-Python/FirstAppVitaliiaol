@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block content %}
+    <p>{{ user }}'s profile</p>
+
+    <p>firstname: {{user.userprofile.first_name}}</p>
+{% endblock %}

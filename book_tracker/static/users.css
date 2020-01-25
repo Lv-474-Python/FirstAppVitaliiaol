@@ -1,0 +1,13 @@
+body {
+    background: rgb(11,9,64);
+    background: linear-gradient(90deg, rgba(11,9,64,1) 0%, rgba(9,9,121,1) 35%, rgba(102,76,200,1) 100%);
+}
+
+.roboto-text {
+    font-family: 'Roboto Mono', monospace;
+    color: #ffffff;
+}
+
+.karla-text {
+    font-family: 'Karla', sans-serif;
+}

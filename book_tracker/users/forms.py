@@ -1,22 +1,6 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.forms import PasswordInput
-
-'''class SignUpForm(UserCreationForm):
-    username = forms.CharField(min_length=5, validators=[RegexValidator(r'^[0-9a-zA-Z]*$',
-                                                                        'Only alphanumeric characters are allowed')])
-    email = forms.EmailField(max_length=200, required=True, help_text='Enter your email')
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password1', 'password2')
-        help_texts = {
-            'username': None,
-            'email': None,
-        }'''
 
 
 class SignUpForm(forms.Form):

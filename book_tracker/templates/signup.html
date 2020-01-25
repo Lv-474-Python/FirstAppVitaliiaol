@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+
+    {% block head %}
+        <title>Sign Up</title>
+    {% endblock %}
+
     {% block content %}
-        <h2>Sign Up</h2>
+        <h2 class="roboto-text">Join Us!</h2>
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-            <p>
+            <p class="karla-text">
                 {{ field.label_tag }}<br>
                 {{field}}
             </p>
