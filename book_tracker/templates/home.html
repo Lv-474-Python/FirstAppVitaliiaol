@@ -2,8 +2,18 @@
 
     {% block head %}
         <title>Homepage</title>
+        <style>
+        </style>
     {% endblock %}
 
     {% block content %}
-        <h1 class="roboto-text">homepage</h1>
+        <section>
+            <div id="header"><p class="roboto-text">Book Tracker</p></div>
+            <nav>
+                <ul>
+                    <li class="karla-text"><a href="{%url 'profile'%}">Profile</a></li>
+                    <li class="karla-text"><a href="{%url 'signout'%}">Sign Out</a></li>
+                </ul>
+            </nav>
+        </section>
     {% endblock %}

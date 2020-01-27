@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+    {% block head %}
+        <title>Edit Profile</title>
+    {% endblock %}
+
+    {% block content %}
+        <form method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+                {% for key,value in form.errors.items %}
+                    <small class="karla-text">{{ value }}</small>
+                {% endfor %}
+            {% endif %}
+            {% for field in info_form %}
+                <p class="karla-text">
+                        {{ field.label_tag }} <br>
+                        {{ field }}
+                </p>
+            {% endfor %}
+            {% for field in profile_form %}
+                <p class="'karla-text'">
+                    {{ field.label_tag }} <br>
+                    {{ field }}
+                </p>
+            {% endfor %}
+            <button type="submit">Submit Changes</button>
+        </form>
+    {% endblock %}

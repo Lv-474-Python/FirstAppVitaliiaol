@@ -6,11 +6,10 @@ from django.dispatch import receiver
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=200)
-    about = models.TextField()
+    about = models.TextField(default='')
     location = models.CharField(max_length=55, default='')
+    website = models.URLField(default='')
+    hide_email = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username

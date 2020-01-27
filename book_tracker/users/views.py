@@ -7,10 +7,14 @@ from django.contrib.auth.hashers import make_password
 
 
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect('signin')
     return render(request, 'home.html')
 
 
 def sign_up(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -30,6 +34,7 @@ def sign_in(request):
         return redirect('home')
     if request.method == 'POST':
         form = SignInForm(request.POST)
+        username = request.POST.get('username')
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')

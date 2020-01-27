@@ -1,13 +1,61 @@
 body {
-    background: rgb(11,9,64);
-    background: linear-gradient(90deg, rgba(11,9,64,1) 0%, rgba(9,9,121,1) 35%, rgba(102,76,200,1) 100%);
+    background: rgb(53,30,139);
+    background: linear-gradient(90deg, rgba(53,30,139,1) 0%, rgba(16,62,189,1) 50%, rgba(114,88,236,1) 100%);
 }
 
 .roboto-text {
     font-family: 'Roboto Mono', monospace;
-    color: #ffffff;
 }
 
 .karla-text {
     font-family: 'Karla', sans-serif;
+}
+
+.form-control, button, label {
+    border: none;
+    outline: none;
+    background-none;
+    border-radius: 25px;
+    position: relative;
+}
+
+button {
+    padding: 0.5em;
+}
+
+.container {
+    border-radius: 25px;
+    border: 3px solid black;
+    overflow: visible;
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto 100px;
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+.error-cont {
+    position: absolute;
+    color: #db3a1a;
+    right: 15em;
+}
+
+nav {
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    background: #fff;
+    font-size: 120%;
+    text-align: center;
+}
+
+nav li {
+    display: inline-block;
+    padding: 24px 10px;
+}
+
+#header {
+    font-size: 150%;
+    text-align: center;
 }

@@ -1,13 +1,18 @@
 from django import forms
 from django.core.validators import RegexValidator
-from django.forms import PasswordInput
+from django.db import IntegrityError
+from django.forms import PasswordInput, ValidationError, TextInput
+from django.contrib.auth.models import User
 
 
 class SignUpForm(forms.Form):
-    username = forms.CharField(min_length=5, max_length=25, validators=[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')])
-    email = forms.EmailField()
-    password = forms.CharField(min_length=9, max_length=125, widget=PasswordInput())
-    re_password = forms.CharField(min_length=9, max_length=125, widget=PasswordInput(), label='Confirm your password')
+    username = forms.CharField(min_length=5, max_length=25,
+                               validators=[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')],
+                               widget=TextInput(attrs={"class": "form-control"}))
+    email = forms.EmailField(widget=TextInput(attrs={"class": "form-control"}))
+    password = forms.CharField(min_length=9, max_length=125, widget=PasswordInput(attrs={"class": "form-control"}))
+    re_password = forms.CharField(min_length=9, max_length=125, widget=PasswordInput(attrs={"class":"form-control"}),
+                                  label='Confirm your password')
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
@@ -22,12 +27,18 @@ class SignUpForm(forms.Form):
         password = self.cleaned_data.get('password')
         re_password = self.cleaned_data.get('re_password')
         if not password == re_password:
-            self.add_error(re_password, "Passwords don't match")
+            raise ValidationError("Passwords don't match")
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email=email).exists():
+            raise ValidationError("Looks like somebody's already using this email address")
+        return email
 
 
 class SignInForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=PasswordInput())
+    username = forms.CharField(widget=TextInput(attrs={"class": "form-control"}))
+    password = forms.CharField(widget=PasswordInput(attrs={"class":"form-control"}))
 
     class Meta:
         fields = ['username', 'password']

@@ -5,17 +5,25 @@
     {% endblock %}
 
     {% block content %}
-        <div class="form-container">
-            <h2 class="roboto-text">Welcome back!</h2>
-            <form method="post">
-                {% csrf_token %}
-                {% for field in form %}
-                    <p class="karla-text">
-                        {{ field.label_tag }} <br>
-                        {{ field }}
-                    </p>
-                {% endfor %}
-                <button type="submit">Sign In</button>
-            </form>
+        <div class="container">
+            <div class="form-sign">
+                <h2 class="roboto-text">Welcome back!</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        {% for key,value in errors.items %}
+                            <div class="error-cont"><small class="karla-text">{{ value }}</small></div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for field in form %}
+                        <p>
+                            <label class="karla-text">{{ field.label }}</label> <br>
+                            {{ field }}
+                        </p>
+                    {% endfor %}
+                    <button type="submit">Sign In</button>
+                </form>
+                <p class="roboto-text" id="redirect">Are you new here? <br> <a href="{% url 'signup' %}">Get yourself an account!</a> </p>
+            </div>
         </div>
     {% endblock %}
