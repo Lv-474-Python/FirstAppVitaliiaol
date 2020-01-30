@@ -6,9 +6,9 @@ from django.dispatch import receiver
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    about = models.TextField(default='')
-    location = models.CharField(max_length=55, default='')
-    website = models.URLField(default='')
+    about = models.TextField(default='', blank=True)
+    location = models.CharField(max_length=55, default='', blank=True)
+    website = models.URLField(default='', blank=True)
     hide_email = models.BooleanField(default=True)
 
     def __str__(self):

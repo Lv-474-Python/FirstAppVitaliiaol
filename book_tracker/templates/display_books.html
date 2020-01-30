@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+
+{%block head%}
+    <title>Books</title>
+{%endblock%}
+
+{%block content%}
+    <ul>
+        {%for book in books%}
+            <a href="{%url 'view_book' book.id%}"><li>{{book}}</li></a>
+        {%endfor%}
+    </ul>
+{%endblock%}

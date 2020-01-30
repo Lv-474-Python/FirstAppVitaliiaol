@@ -1,6 +1,5 @@
 from django import forms
 from django.core.validators import RegexValidator
-from django.db import IntegrityError
 from django.forms import PasswordInput, ValidationError, TextInput
 from django.contrib.auth.models import User
 
@@ -34,6 +33,14 @@ class SignUpForm(forms.Form):
         if email and User.objects.filter(email=email).exists():
             raise ValidationError("Looks like somebody's already using this email address")
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        try:
+            user = User.objects.get(username=username)
+            raise ValidationError('Unfortunately, this username is taken')
+        except User.DoesNotExist:
+            return username
 
 
 class SignInForm(forms.Form):

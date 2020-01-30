@@ -5,20 +5,28 @@
 {% endblock %}
 
 {% block content %}
-    <h2>{{ user }}'s profile</h2>
-    <p>First Name: {{ user.first_name }}</p>
-    <p>Last Name: {{ user.last_name }}</p>
-    {% if not user.userprofile.hide_email %}
-        <p>Email: {{ user.email }}</p>
-    {% endif %}
-    <p>Date Joined: {{ user.date_joined | date:'F d Y' }}</p>
-    <p>From: {{user.userprofile.location}}</p>
-    <p>Website: {{user.userprofile.website}}</p>
-    <p>About: {{user.userprofile.about}}</p>
-    <form action="edit">
-        <button>Edit Profile</button>
-    </form>
-    <form action="change_password">
-        <button>Change Password</button>
-    </form>
+    <div id="profile-header">
+        <h2 class="roboto-text">{{ user }}'s profile</h2>
+    </div>
+    <div class="profile-container">
+        <p class="profile-column karla-text">First Name:{{ user.first_name }}</p>
+        <p class="profile-column karla-text">Last Name:{{ user.last_name }}</p>
+        {% if not user.userprofile.hide_email %}
+            <p class="profile-column karla-text">Email: {{ user.email }}</p>
+        {% endif %}
+        <p class="profile-column karla-text">Date Joined: {{ user.date_joined | date:'F d Y' }}</p>
+        <p class="profile-column karla-text">From: {{user.userprofile.location}}</p>
+        <p class="profile-column karla-text">Website: {{user.userprofile.website}}</p>
+        <p class="profile-column karla-text">About: {{user.userprofile.about}}</p>
+        <div class="profile-button karla-text">
+            <form action="edit">
+                <button>Edit Profile</button>
+            </form>
+        </div>
+        <div class="profile-button karla-text">
+            <form action="change_password">
+                <button>Change Password</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
