@@ -26,7 +26,7 @@ def sign_up(request):
             return redirect('signin')
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'users/sign_up.html', {'form': form})
 
 
 def sign_in(request):
@@ -44,11 +44,11 @@ def sign_in(request):
                 return redirect('home')
     else:
         form = SignInForm()
-    return render(request, 'signin.html', {'form': form})
+    return render(request, 'users/sign_in.html', {'form': form})
 
 
 @login_required(login_url='signin')
 def sign_out(request):
     logout(request)
-    return render(request, 'signout.html')
+    return render(request, 'users/sign_out.html')
 

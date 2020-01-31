@@ -9,7 +9,7 @@ from .forms import EditUserInfo, EditUserProfile, ChangeUserPassword
 @login_required(login_url='signin')
 def view_profile(request):
     context = {'user': request.user}
-    return render(request, 'profile.html', context)
+    return render(request, 'profile/profile.html', context)
 
 
 @login_required(login_url='signin')
@@ -26,7 +26,7 @@ def edit_profile(request):
     info_form = EditUserInfo(instance=request.user)
     profile_from = EditUserProfile(instance=request.user.userprofile)
     context = {'info_form': info_form, 'profile_form': profile_from}
-    return render(request, 'editprofile.html', context)
+    return render(request, 'profile/edit_profile.html', context)
 
 
 @login_required(login_url='signin')
@@ -45,4 +45,4 @@ def change_password(request):
             update_session_auth_hash(request, user)
             return redirect('profile')
     form = ChangeUserPassword()
-    return render(request, 'changepassword.html', {'form': form})
+    return render(request, 'profile/change_password.html', {'form': form})
