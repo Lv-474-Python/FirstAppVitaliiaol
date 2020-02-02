@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('users.urls')),
     path('profile/', include('profile.urls')),
     path('books/', include('books.urls')),
-    path('reading-log/', include('reading_log.urls'))
+    path('reading-log/', include('reading_log.urls')),
+    path('reviews/', include('reviews.urls'))
 ]

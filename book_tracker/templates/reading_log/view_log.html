@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+
+{%block head%}
+    <title>{{user.username}}'s Reading Log</title>
+{%endblock%}
+
+{%block content%}
+    {%for log in logged_books%}
+        <p>
+            {{log.book}} <br>
+            {{log.get_status_display}}
+        </p>
+    {%endfor%}
+{%endblock%}

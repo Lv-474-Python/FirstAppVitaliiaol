@@ -7,4 +7,5 @@
 {%block content%}
     <p>{{book}}</p>
     <a href="{%url 'add_to_log' book.slug%}">Add to Your Log</a>
+    <a href="{%url 'add_review' book.slug%}">Write Review</a>
 {%endblock%}

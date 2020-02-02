@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'profile',
     'books',
     'reading_log',
+    'reviews',
 ]
 
 MIDDLEWARE = [

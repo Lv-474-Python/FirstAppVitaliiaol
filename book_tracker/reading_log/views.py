@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import AddBookToLog
 from books.models import Book
+from .models import ReadingLog
 
 
 @login_required(login_url='signin')
@@ -17,3 +18,11 @@ def add_to_log(request, slug):
             return redirect('home')
     form = AddBookToLog()
     return render(request, 'reading_log/add_to_log.html', {'form': form, 'book': book})
+
+
+@login_required(login_url='signin')
+def view_log(request):
+    user = request.user
+    logged_books = ReadingLog.objects.filter(user=user)
+    context = {'user': user, 'logged_books': logged_books}
+    return render(request, 'reading_log/view_log.html', context)
