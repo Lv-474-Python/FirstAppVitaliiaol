@@ -6,7 +6,7 @@ class AddReview(forms.ModelForm):
 
     class Meta:
         model = Review
-        exclude = ['user', 'book']
+        fields = ['text', 'rating']
         widgets = {
             'text': forms.Textarea(attrs={"class": "form-control"}),
             'rating': forms.Select(attrs={"class": "form-control"})

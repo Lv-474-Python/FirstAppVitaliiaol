@@ -5,13 +5,10 @@ from django.contrib.auth.models import User
 
 
 class SignUpForm(forms.Form):
-    username = forms.CharField(min_length=5, max_length=25,
-                               validators=[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')],
-                               widget=TextInput(attrs={"class": "form-control"}))
-    email = forms.EmailField(widget=TextInput(attrs={"class": "form-control"}))
-    password = forms.CharField(min_length=9, max_length=125, widget=PasswordInput(attrs={"class": "form-control"}))
-    re_password = forms.CharField(min_length=9, max_length=125, widget=PasswordInput(attrs={"class":"form-control"}),
-                                  label='Confirm your password')
+    username = forms.CharField(min_length=5, max_length=25, validators=[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')])
+    email = forms.EmailField()
+    password = forms.CharField(min_length=9, max_length=125)
+    re_password = forms.CharField(min_length=9, max_length=125, label='Confirm your password')
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
@@ -20,6 +17,12 @@ class SignUpForm(forms.Form):
 
     class Meta:
         fields = ['username', 'email', 'password', 're_password']
+        widgets = {
+            'username': forms.TextInput(attrs={"class": "form-control"}),
+            'email': forms.EmailInput(attrs={"class": "form-control"}),
+            'password': forms.PasswordInput(attrs={"class": "form-control"}),
+            're_password': forms.PasswordInput(attrs={"class": "form-control"})
+        }
 
     def clean(self):
         super(SignUpForm, self).clean()
@@ -37,7 +40,7 @@ class SignUpForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data.get('username')
         try:
-            user = User.objects.get(username=username)
+            User.objects.get(username=username)
             raise ValidationError('Unfortunately, this username is taken')
         except User.DoesNotExist:
             return username

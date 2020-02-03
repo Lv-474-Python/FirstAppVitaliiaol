@@ -1,7 +1,7 @@
 from django import forms
-from users.models import UserProfile
 from django.contrib.auth.models import User
-from django.forms import ValidationError, PasswordInput, TextInput, Textarea, URLInput, EmailInput, CheckboxInput
+
+from users.models import UserProfile
 
 
 class EditUserInfo(forms.ModelForm):
@@ -10,16 +10,16 @@ class EditUserInfo(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email']
         widgets = {
-            "first_name": TextInput(attrs={"class": "form-control"}),
-            'last_name': TextInput(attrs={"class": "form-control"}),
-            'email': EmailInput(attrs={"class": "form-control"})
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            'last_name': forms.TextInput(attrs={"class": "form-control"}),
+            'email': forms.EmailInput(attrs={"class": "form-control"})
         }
-        
+
     def clean_email(self):
-        entered_email = self.cleaned_data.get('email')
-        if entered_email and User.objects.filter(email=entered_email).exclude(username=self.instance.username).exists():
-            raise ValidationError('This email address is already in use')
-        return entered_email
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email=email).exclude(username=self.instance.username).exists():
+            raise forms.ValidationError('This email address is already in use')
+        return email
 
 
 class EditUserProfile(forms.ModelForm):
@@ -27,23 +27,23 @@ class EditUserProfile(forms.ModelForm):
         model = UserProfile
         fields = ['about', 'location', 'website', 'hide_email']
         widgets = {
-            'about': Textarea(attrs={"class": "form-control"}),
-            'location': TextInput(attrs={"class": "form-control"}),
-            'website': URLInput(attrs={"class": "form-control"}),
-            'hide_email': CheckboxInput(attrs={"class": "form-control"})
+            'about': forms.Textarea(attrs={"class": "form-control"}),
+            'location': forms.TextInput(attrs={"class": "form-control"}),
+            'website': forms.URLInput(attrs={"class": "form-control"}),
+            'hide_email': forms.CheckboxInput(attrs={"class": "form-control"})
         }
 
         def __init__(self, *args, **kwargs):
-            super(EditUserProfile, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
             for field in self.fields:
                 field.required = False
 
 
 class ChangeUserPassword(forms.Form):
     old_password_correct = False
-    old_password = forms.CharField(min_length=9, max_length=25, widget=PasswordInput(), label='Enter your old password')
-    new_password = forms.CharField(min_length=9, max_length=25, widget=PasswordInput(), label='New password')
-    re_password = forms.CharField(min_length=9, max_length=25, widget=PasswordInput(), label='Confirm new password')
+    old_password = forms.CharField(min_length=9, max_length=25)
+    new_password = forms.CharField(min_length=9, max_length=25)
+    re_password = forms.CharField(min_length=9, max_length=25)
 
     def __init__(self, *args, **kwargs):
         super(ChangeUserPassword, self).__init__(*args, **kwargs)
@@ -53,6 +53,18 @@ class ChangeUserPassword(forms.Form):
     class Meta:
         fields = ['old_password', 'new_password', 're_password']
 
+        widgets = {
+            'old_password': forms.PasswordInput(attrs={"class": "form-control"}),
+            'new_password': forms.PasswordInput(attrs={"class": "form-control"}),
+            're_password': forms.PasswordInput(attrs={"class": "form-control"})
+        }
+
+        labels = {
+            'old_password': "Enter your current password",
+            'new_password': "Your new password",
+            're_password': "Confirm new password",
+        }
+
     def flag_old_password(self):
         self.old_password_correct = False
         return 0
@@ -60,7 +72,7 @@ class ChangeUserPassword(forms.Form):
     def clean_old_password(self):
         old_password = self.cleaned_data.get('old_password')
         if not self.old_password_correct:
-            raise ValidationError('The password you entered is incorrect')
+            raise forms.ValidationError('The password you entered is incorrect')
         return old_password
 
     def clean(self):
@@ -69,7 +81,7 @@ class ChangeUserPassword(forms.Form):
         re_password = self.cleaned_data.get('re_password')
         old_password = self.cleaned_data.get('old_password')
         if new_password != re_password:
-            raise ValidationError("Your passwords don't match")
-        elif new_password == old_password:
-            raise ValidationError("You can't repeat your old password")
+            raise forms.ValidationError("Your passwords don't match")
+        if new_password == old_password:
+            raise forms.ValidationError("You can't repeat your old password")
         return self.cleaned_data

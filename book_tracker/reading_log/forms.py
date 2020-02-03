@@ -1,10 +1,10 @@
-from .models import ReadingLog
 from django import forms
+from .models import ReadingLog
 
 
 class AddBookToLog(forms.ModelForm):
 
     class Meta:
         model = ReadingLog
-        exclude = ['user', 'book', 'date_updated']
+        fields = ['status']
         widgets = {'status': forms.Select(attrs={"class": "form-control"})}

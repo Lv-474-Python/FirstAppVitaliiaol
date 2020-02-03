@@ -1,7 +1,6 @@
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from users.models import UserProfile
 from django.contrib.auth.models import User
 from .forms import EditUserInfo, EditUserProfile, ChangeUserPassword
 
@@ -35,7 +34,6 @@ def change_password(request):
         form = ChangeUserPassword(request.POST)
         old_password = request.POST.get('old_password')
         new_password = request.POST.get('new_password')
-        re_password = request.POST.get('re_password')
         user = User.objects.get(username=request.user.username)
         if not user.check_password(old_password):
             form.flag_old_password()
