@@ -5,6 +5,7 @@
 {%endblock%}
 
 {%block content%}
+    <div class="container">
     <p>{{book.title}}</p>
     <p>{{book.description}}</p>
     <p>{{book.get_genre_display}}</p>
@@ -13,6 +14,7 @@
             <a href="{%url 'view_author' author.slug%}">{{author}}</a>
         {%endfor%}
     </p>
+    </div>
     <a href="{%url 'add_to_log' book.slug%}">Add to Your Log</a>
     <a href="{%url 'add_review' book.slug%}">Write Review</a>
 {%endblock%}

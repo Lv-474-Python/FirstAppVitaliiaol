@@ -5,8 +5,19 @@
 {%endblock%}
 
 {%block content%}
+        <form method="post">
+            {%csrf_token%}
+            {%for field in form%}
+                {{field}}
+            {%endfor%}
+            <button type="submit">Search</button>
+        </form>
         {%for book in books%}
-            <a href="{%url 'view_book' book.slug%}">{{book}}</a>
+            <a href="{%url 'view_book' book.slug%}">{{book}} by
+                {%for author in book.authors.all%}
+                    {{author}}
+                {%endfor%}
+            </a>
         {%endfor%}
 <small><a href="{%url 'add_book'%}">Couldn't find the book? Add it to our site!</a></small>
 {%endblock%}

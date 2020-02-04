@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import AddBookForm, AddAuthorForm, BookSearchForm
-from .models import Book, Author
+from .models import Book, Author, Book
 
 
 @login_required(login_url='signin')
@@ -22,7 +22,7 @@ def add_author(request):
         form = AddAuthorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('browse_books')
+            return redirect('display_books')
     form = AddAuthorForm()
     context = {'form': form}
     return render(request, 'books/add_author.html', context)
@@ -31,14 +31,17 @@ def add_author(request):
 @login_required(login_url='signin')
 def display_books(request):
     books = Book.objects.all()
-    #by_title_query = request.GET.get('by_title')
-    #by_author_query = request.GET.get('by_author')
     if request.method == "POST":
         form = BookSearchForm(request.POST)
-        by_title = form.cleaned_data.get('by_title')
-        by_author = form.cleaned_data.get('by_author')
-
-    return render(request, 'books/browse_books.html', {'books': books})
+        if form.is_valid():
+            by_title = form.cleaned_data.get('by_title')
+            by_author = form.cleaned_data.get('by_author')
+            by_genre = form.cleaned_data.get('by_genre')
+            books = books.filter(title__icontains=by_title, authors__full_name__icontains=by_author)
+            if by_genre:
+                books = books.filter(genre=by_genre)
+    form = BookSearchForm()
+    return render(request, 'books/browse_books.html', {'books': books, 'form': form})
 
 
 @login_required(login_url='signin')

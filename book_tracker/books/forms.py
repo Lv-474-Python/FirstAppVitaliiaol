@@ -57,17 +57,29 @@ class AddAuthorForm(forms.ModelForm):
 
 
 class BookSearchForm(forms.Form):
+    GENRE_CHOICES = [
+        ('', 'Choose genre'),
+        ('NF', 'Non-Fiction'),
+        ('PT', 'Poetry'),
+        ('NV', 'Novel'),
+        ('AN', 'Anthology'),
+        ('PL', 'Play')
+    ]
+
+    by_title = forms.CharField()
+    by_author = forms.CharField()
+    by_genre = forms.ChoiceField(choices=GENRE_CHOICES, initial='')
 
     class Meta:
-        fields = ['by_title', 'by_author']
-
-        labels = {
-            'by_title': 'Search book by title',
-            'by_author': 'Search book by author'
-        }
+        fields = ['by_title', 'by_author', 'by_genre']
 
         widgets = {
-            'by_title': TextInput(attrs={"class": "form-control"}),
-            'by_author': TextInput(attrs={"class": "form-control"})
+            'by_title': TextInput(attrs={"class": "form-control", "placeholder": "Search by title..."}),
+            'by_author': TextInput(attrs={"class": "form-control", "placeholder": "Search by author..."}),
+            'by_genre': forms.Select(attrs={"class": "form-control"})
         }
 
+    def __init__(self, *args, **kwargs):
+        super(BookSearchForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.required = False
