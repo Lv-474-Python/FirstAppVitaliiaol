@@ -20,3 +20,5 @@ class ReadingLog(models.Model):
 
     class Meta:
         db_table = 'bt_reading_log'
+
+

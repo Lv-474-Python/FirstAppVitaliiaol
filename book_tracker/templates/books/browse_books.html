@@ -5,9 +5,8 @@
 {%endblock%}
 
 {%block content%}
-    <ul>
         {%for book in books%}
-            <a href="{%url 'view_book' book.slug%}"><li>{{book}}</li></a>
+            <a href="{%url 'view_book' book.slug%}">{{book}}</a>
         {%endfor%}
-    </ul>
+<small><a href="{%url 'add_book'%}">Couldn't find the book? Add it to our site!</a></small>
 {%endblock%}

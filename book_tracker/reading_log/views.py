@@ -8,15 +8,17 @@ from .models import ReadingLog
 @login_required(login_url='signin')
 def add_to_log(request, slug):
     book = Book.objects.get(slug=slug)
+    user = request.user
+    instance = AddBookToLog.get_instance(user, book)
     if request.method == "POST":
-        form = AddBookToLog(request.POST)
+        form = AddBookToLog(request.POST, instance=instance)
         if form.is_valid():
             form = form.save(commit=False)
-            form.user = request.user
+            form.user = user
             form.book = book
             form.save()
             return redirect('home')
-    form = AddBookToLog()
+    form = AddBookToLog(instance=instance)
     return render(request, 'reading_log/add_to_log.html', {'form': form, 'book': book})
 
 

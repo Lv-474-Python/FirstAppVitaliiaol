@@ -12,6 +12,9 @@
             <p>
                 {{field.label}} <br>
                 {{field}}
+                {%if field.name == 'authors'%}
+                    <small><a href="{%url 'add_author'%}">Couldn't find the author you need? Add this author to our database!</a></small>
+                {%endif%}
             </p>
         {% endfor %}
         <button type="submit">Submit Book</button>

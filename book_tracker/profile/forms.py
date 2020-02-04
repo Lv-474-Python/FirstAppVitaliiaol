@@ -34,7 +34,7 @@ class EditUserProfile(forms.ModelForm):
         }
 
         def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
+            super(EditUserProfile, self).__init__(*args, **kwargs)
             for field in self.fields:
                 field.required = False
 

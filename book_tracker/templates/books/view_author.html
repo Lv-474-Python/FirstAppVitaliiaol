@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+
+{%block head%}
+    <title>{{author.get_full_name}}</title>
+{%endblock%}
+
+{%block content%}
+    <p>{{author.get_full_name}}</p>
+    <p>{{author.date_of_birth}}</p>
+    <p>{{author.biography}}</p>
+    <ul>
+        {%for book in books%}
+            <li><a href="{%url 'view_book' book.slug%}">{{book}}</a></li>
+        {%endfor%}
+    </ul>
+{%endblock%}

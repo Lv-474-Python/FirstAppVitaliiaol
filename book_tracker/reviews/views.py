@@ -16,8 +16,9 @@ def add_review(request, slug):
             reading_log.save()
     except ReadingLog.DoesNotExist:
         reading_log = ReadingLog.objects.create(user=user, book=book, status='HR')
+    instance = AddReview.get_instance(user, book)
     if request.method == "POST":
-        form = AddReview(request.POST)
+        form = AddReview(request.POST, instance=instance)
         if form.is_valid():
             form = form.save(commit=False)
             form.user = user
@@ -25,5 +26,5 @@ def add_review(request, slug):
             form.save()
             return redirect('home')
     else:
-        form = AddReview()
+        form = AddReview(instance=instance)
     return render(request, 'reviews/add_review.html', {'form': form, 'book': book})

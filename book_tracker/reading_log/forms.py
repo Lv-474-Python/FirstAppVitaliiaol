@@ -8,3 +8,11 @@ class AddBookToLog(forms.ModelForm):
         model = ReadingLog
         fields = ['status']
         widgets = {'status': forms.Select(attrs={"class": "form-control"})}
+
+    @staticmethod
+    def get_instance(user, book):
+        try:
+            instance = user.readinglog_set.get(book=book)
+        except ReadingLog.DoesNotExist:
+            instance = None
+        return instance

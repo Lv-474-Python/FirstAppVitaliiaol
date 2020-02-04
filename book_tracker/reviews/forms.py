@@ -11,3 +11,15 @@ class AddReview(forms.ModelForm):
             'text': forms.Textarea(attrs={"class": "form-control"}),
             'rating': forms.Select(attrs={"class": "form-control"})
         }
+
+    @staticmethod
+    def get_instance(user, book):
+        try:
+            instance = user.review_set.get(book=book)
+        except Review.DoesNotExist:
+            instance = None
+        return instance
+
+    def populate(self):
+        pass
+
