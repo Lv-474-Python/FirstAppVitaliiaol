@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.forms import PasswordInput
 
 from users.models import UserProfile
 
@@ -40,10 +41,10 @@ class EditUserProfile(forms.ModelForm):
 
 
 class ChangeUserPassword(forms.Form):
-    old_password_correct = False
-    old_password = forms.CharField(min_length=9, max_length=25)
-    new_password = forms.CharField(min_length=9, max_length=25)
-    re_password = forms.CharField(min_length=9, max_length=25)
+    old_password_correct = True
+    old_password = forms.CharField(min_length=9, max_length=25, widget=PasswordInput(attrs={"class": "form-control"}))
+    new_password = forms.CharField(min_length=9, max_length=25, widget=PasswordInput(attrs={"class": "form-control"}))
+    re_password = forms.CharField(min_length=9, max_length=25, widget=PasswordInput(attrs={"class": "form-control"}))
 
     def __init__(self, *args, **kwargs):
         super(ChangeUserPassword, self).__init__(*args, **kwargs)
@@ -52,12 +53,6 @@ class ChangeUserPassword(forms.Form):
 
     class Meta:
         fields = ['old_password', 'new_password', 're_password']
-
-        widgets = {
-            'old_password': forms.PasswordInput(attrs={"class": "form-control"}),
-            'new_password': forms.PasswordInput(attrs={"class": "form-control"}),
-            're_password': forms.PasswordInput(attrs={"class": "form-control"})
-        }
 
         labels = {
             'old_password': "Enter your current password",
@@ -70,10 +65,8 @@ class ChangeUserPassword(forms.Form):
         return 0
 
     def clean_old_password(self):
-        old_password = self.cleaned_data.get('old_password')
         if not self.old_password_correct:
             raise forms.ValidationError('The password you entered is incorrect')
-        return old_password
 
     def clean(self):
         super(ChangeUserPassword, self).clean()

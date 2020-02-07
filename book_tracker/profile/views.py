@@ -35,14 +35,16 @@ def change_password(request):
     if request.method == "POST":
         form = ChangeUserPassword(request.POST)
         old_password = request.POST.get('old_password')
-        new_password = request.POST.get('new_password')
         user = User.objects.get(username=request.user.username)
         if not user.check_password(old_password):
             form.flag_old_password()
         if form.is_valid():
+            new_password = form.cleaned_data.get('new_password')
+            old_password = form.cleaned_data.get('old_password')
             user.set_password(new_password)
             user.save()
             update_session_auth_hash(request, user)
             return redirect('profile')
-    form = ChangeUserPassword()
+    else:
+        form = ChangeUserPassword()
     return render(request, 'profile/change_password.html', {'form': form})
