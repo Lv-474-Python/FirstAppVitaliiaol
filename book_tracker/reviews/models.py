@@ -20,3 +20,6 @@ class Review(models.Model):
 
     class Meta:
         db_table = 'bt_review'
+
+    def __str__(self):
+        return f"Review on '{self.book}' by {self.user}"

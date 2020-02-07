@@ -1,80 +1,45 @@
 body {
-    background: rgb(53,30,139);
-    background: linear-gradient(90deg, rgba(53,30,139,1) 0%, rgba(16,62,189,1) 50%, rgba(114,88,236,1) 100%);
-}
-
-.roboto-text {
     font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
 }
 
-.karla-text {
-    font-family: 'Karla', sans-serif;
+.navbar, h1, h2 {
+    font-size: 25px;
+    font-family: 'Archivo Black', sans-serif;
 }
 
-.form-control, button, label {
-    border: none;
-    outline: none;
-    background-none;
-    border-radius: 25px;
-    position: relative;
-}
-
-button {
-    padding: 0.5em;
-}
-
-.container {
-    border-radius: 25px;
-    border: 3px solid black;
-    overflow: visible;
-    position: relative;
-    width: 500px;
-    height: 500px;
-    margin: 0 auto 100px;
-    background: rgba(255, 255, 255, 0.9);
-    text-align: center;
-}
-
-.error-cont {
-    position: absolute;
-    color: #db3a1a;
-    right: 15em;
-}
-
-nav {
-    position: absolute;
-    width: 100%;
-    height: 70px;
-    background: #fff;
-    font-size: 120%;
-    text-align: center;
-}
-
-nav li {
-    display: inline-block;
-    padding: 24px 10px;
-}
-
-#header {
-    font-size: 150%;
-    text-align: center;
-}
-
-#profile-header {
-    background-color: #fff;
+a {
     color: #000;
-    font-size: 150%;
-    width: 100%;
 }
 
-.profile-button {
-    display: inline-block;
-    padding: 10px;
-}
-
-.profile-column {
+.form-control, .block-btn {
+    margin: 5px 0;
     width: 50%;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 25px;
-    padding: 0.5em;
+    position: relative;
+    height: 35px;
+    top: 25%;
+    left: 25%;
+    font-size: 13px;
+}
+
+.label-cont {
+    text-align: center;
+    font-weight: bold;
+}
+
+#books-table {
+    margin: 10px auto;
+}
+
+.view-content, h2 {
+    margin: 20px;
+}
+
+.view-btns{
+    float: left;
+    margin: 0.5em;
+}
+
+.log-headline {
+    font-weight: bold;
 }

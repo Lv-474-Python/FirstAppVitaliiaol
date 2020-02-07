@@ -4,6 +4,15 @@
         <title>Sign Out</title>
     {% endblock %}
 
+    {%block signout%}
+        <li class="nav_item">
+            <a class="nav-link" href="{%url 'signin'%}">Sign In</a>
+        </li>
+        <li class="nav_item">
+            <a class="nav-link" href="{%url 'signup'%}">Sign Up</a>
+        </li>
+    {%endblock%}
+
     {% block content %}
         <h1 class="roboto-text">You have been successfully signed out. <br> Come visit us again sometime!</h1>
     {% endblock %}

@@ -35,11 +35,8 @@ def sign_in(request):
         return redirect('home')
     if request.method == 'POST':
         form = SignInForm(request.POST)
-        username = request.POST.get('username')
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = form.check_user()
             if user and user.is_active:
                 login(request, user)
                 return redirect('home')

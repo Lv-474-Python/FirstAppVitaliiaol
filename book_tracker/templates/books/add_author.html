@@ -6,14 +6,19 @@
 
 {% block content %}
     <h2>Add Author</h2>
+    <div class="container">
     <form method="post">
         {% csrf_token %}
+        {%for key, value in form.errors.items%}
+            <small class="text-danger">{{value}}</small>
+        {%endfor%}
         {% for field in form %}
             <p>
-                {{field.label}} <br>
+            <div class="label-cont">{{field.label}}</div> <br>
                 {{field}}
             </p>
         {% endfor %}
-        <button type="submit">Submit Author</button>
+        <button type="submit" class="btn btn-outline-warning block-btn">Submit Author</button>
     </form>
+    </div>
 {% endblock %}

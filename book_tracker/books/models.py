@@ -51,3 +51,15 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Book, self).save(*args, **kwargs)
+
+    def get_average_rating(self):
+        if self.review_set.all():
+            ratings = [int(review.rating) for review in self.review_set.all()]
+            return round(sum(ratings)/len(ratings),1)
+        return 0
+
+    def get_review_count(self):
+        if self.review_set.all():
+            reviews = [review for review in self.review_set.all()]
+            return len(reviews)
+        return 0

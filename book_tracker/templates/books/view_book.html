@@ -5,16 +5,50 @@
 {%endblock%}
 
 {%block content%}
-    <div class="container">
-    <p>{{book.title}}</p>
-    <p>{{book.description}}</p>
+    <h2>{{book.title}}</h2>
+    <hr>
+    <h2>Description</h2>
+    <div class="container view-content">
+        <p>{{book.description}}</p>
+    </div>
+    <hr>
+    <h2>Genre</h2>
+    <div class="container view-content">
     <p>{{book.get_genre_display}}</p>
-    <p> Written by
+    </div>
+    <hr>
+    <h2>Written by</h2>
+    <div class="container view-content">
+    <p>
         {%for author in authors%}
             <a href="{%url 'view_author' author.slug%}">{{author}}</a>
         {%endfor%}
     </p>
     </div>
-    <a href="{%url 'add_to_log' book.slug%}">Add to Your Log</a>
-    <a href="{%url 'add_review' book.slug%}">Write Review</a>
+    <hr>
+    <h2>Rating</h2>
+    <div class="container view-content">
+        <p>{{book.get_average_rating}}</p>
+    </div>
+    <hr>
+    <h2>Recent Reviews</h2>
+    <div class="container view-content">
+        {%for review in recent_reviews%}
+            <p>
+            {{review}} <br>
+                {{review.text}}<br>
+            {{review.rating}}
+            </p>
+        {%endfor%}
+    </div>
+    <div class="view-btns">
+        <form action="{%url 'add_to_log' book.slug%}">
+            <button class="btn btn-outline-warning btn-sm">Add to Your Log</button>
+        </form>
+    </div>
+    <div class="view-btns">
+        <form action="{%url 'add_review' book.slug%}">
+            <button class="btn btn-outline-warning btn-sm">Write Review</button>
+        </form>
+    </div>
 {%endblock%}

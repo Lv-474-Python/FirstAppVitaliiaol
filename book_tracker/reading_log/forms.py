@@ -1,6 +1,8 @@
 from django import forms
 from .models import ReadingLog
 
+from reviews.models import Review
+
 
 class AddBookToLog(forms.ModelForm):
 

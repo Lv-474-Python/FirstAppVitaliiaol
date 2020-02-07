@@ -5,12 +5,15 @@
 {%endblock%}
 
 {%block content%}
+    <div class="container">
     <form method="post">
         {%csrf_token%}
+        <small class="text-danger">{{form.non_field_errors}}</small>
         {%for field in form%}
-            {{field.label}} <br>
+            <div class="label-cont">{{field.label}}</div> <br>
             {{field}}
         {%endfor%}
-        <button type="submit">Add This Book to Your Log</button>
+        <button type="submit" class="btn btn-outline-warning block-btn">Add This Book to Your Log</button>
     </form>
+    </div>
 {%endblock%}

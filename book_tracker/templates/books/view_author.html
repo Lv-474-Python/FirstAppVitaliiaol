@@ -2,12 +2,24 @@
 
 {%block head%}
     <title>{{author.get_full_name}}</title>
+    <style>
+    </style>
 {%endblock%}
 
 {%block content%}
-    <p>{{author.get_full_name}}</p>
-    <p>{{author.date_of_birth}}</p>
-    <p>{{author.biography}}</p>
+        <h2>{{author.get_full_name}}</h2>
+        <hr>
+        <h2>Date of Birth</h2>
+    <div class="container view-content">
+        <p>{{author.date_of_birth}}</p>
+    </div>
+    <hr>
+    <h2>Biography</h2>
+        <div class="container view-content">
+            <p>{{author.biography}}</p>
+        </div>
+    <hr>
+        <h2>Books</h2>
     <ul>
         {%for book in books%}
             <li><a href="{%url 'view_book' book.slug%}">{{book}}</a></li>

@@ -5,11 +5,51 @@
 {%endblock%}
 
 {%block content%}
+<script type='text/javascript'>
+        $(document).ready(function(){
+            $(".delete_button").click(function() {
+                let confirmation = confirm("Are you sure you want to delete this book from your log? This will delete a related review as well.");
+                if (confirmation) {
+                    var id = $(this).attr('id');
+                    var url = $(this).data('url');
+                    $.ajax({
+                        url: url,
+                        data: { 'id' : id },
+                        dataType: 'json',
+                        type: 'POST',
+                        beforeSend: function(xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}" )
+                    },
+                    success: function(response){
+                        $('#log'+id).remove();
+                        location.reload();
+                    },
+                    error: function(error) {
+                        alert('Error!', error);
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <h2>Entries</h2>
+    <div class="container">
     {%for log in logged_books%}
-        <p>
-            {{log.book}} <br>
-            {{log.get_status_display}}
-            <button type="submit">Delete</button>
+        <p id="log_{{log.id}}">
+            <a href="{%url 'view_book' log.book.slug%}"><p class="log-headline">{{log.book}}</p></a> <br>
+            {{log.get_status_display}} <br>
+            <button class="btn btn-outline-danger btn-sm delete_button" id="{{log.id}}" data-url="{%url 'delete_log' log.id%}">Delete</button>
+            <hr>
         </p>
     {%endfor%}
+    </div>
+    <h2>Reviews</h2>
+    <div class="container">
+    {%for review in user.review_set.all%}
+            <p class="log-headline">{{review}}</p> <br>
+            {{review.text}} <br>
+            {{review.rating}}/5
+            <hr>
+    {%endfor%}
+    </div>
 {%endblock%}

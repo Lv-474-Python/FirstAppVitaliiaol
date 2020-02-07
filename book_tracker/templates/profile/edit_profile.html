@@ -5,25 +5,28 @@
     {% endblock %}
 
     {% block content %}
+        <div class="container">
         <form method="post">
             {% csrf_token %}
-            {% if form.errors %}
-                {% for key,value in form.errors.items %}
-                    <small class="karla-text">{{ value }}</small>
+                {% for key,value in info_form.errors.items %}
+                    <small class="text-danger">{{ value }}</small>
                 {% endfor %}
-            {% endif %}
+                {% for key,value in profile_form.errors.items %}
+                    <small class="text-danger">{{ value }}</small>
+                {% endfor %}
             {% for field in info_form %}
-                <p class="karla-text">
-                        {{ field.label_tag }} <br>
+                <p>
+                <div class="label-cont">{{ field.label }}</div> <br>
                         {{ field }}
                 </p>
             {% endfor %}
             {% for field in profile_form %}
-                <p class="'karla-text'">
-                    {{ field.label_tag }} <br>
+                <p>
+                <div class="label-cont">{{ field.label }}</div> <br>
                     {{ field }}
                 </p>
             {% endfor %}
-            <button type="submit">Submit Changes</button>
+            <button type="submit" class="btn btn-outline-danger block-btn">Submit Changes</button>
         </form>
+        </div>
     {% endblock %}

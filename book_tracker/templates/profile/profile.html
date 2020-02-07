@@ -5,29 +5,54 @@
 {% endblock %}
 
 {% block content %}
-    <div id="profile-header">
-        <h2 class="roboto-text">{{ user }}'s profile</h2>
+    <h2 class>{{ user }}'s profile</h2>
+    <hr>
+    <h2>Full Name</h2>
+    <div class="container view-content">
+        <p>{{ user.first_name }} {{user.last_name}}</p>
     </div>
-    <div class="profile-container">
-        <p class="profile-column karla-text">First Name:{{ user.first_name }}</p>
-        <p class="profile-column karla-text">Last Name:{{ user.last_name }}</p>
+    <hr>
         {% if not user.userprofile.hide_email %}
-            <p class="profile-column karla-text">Email: {{ user.email }}</p>
+            <h2>Email</h2>
+            <div class="container view-content">
+                <p>{{ user.email }}</p>
+            </div>
+            <hr>
         {% endif %}
-        <p class="profile-column karla-text">Date Joined: {{ user.date_joined | date:'F d Y' }}</p>
-        <p class="profile-column karla-text">From: {{user.userprofile.location}}</p>
-        <p class="profile-column karla-text">Website: {{user.userprofile.website}}</p>
-        <p class="profile-column karla-text">About: {{user.userprofile.about}}</p>
-        <div class="profile-button karla-text">
+        <h2>Date Joined</h2>
+        <div class="container view-content">
+            <p>{{ user.date_joined | date:'F d Y' }}</p>
+        </div>
+        <hr>
+        <h2>From</h2>
+        <div class="container view-content">
+            <p>{{user.userprofile.location}}</p>
+        </div>
+        <hr>
+        <h2>Website</h2>
+        <div class="container view-content">
+            <p>{{user.userprofile.website}}</p>
+        </div>
+        <hr>
+        <h2>About</h2>
+        <div class="container view-content">
+            <p>{{user.userprofile.about}}</p>
+        </div>
+        <hr>
+        <div class="view-btns">
             <form action="edit">
-                <button>Edit Profile</button>
+                <button class="btn btn-outline-warning btn-sm">Edit Profile</button>
             </form>
         </div>
-        <div class="profile-button karla-text">
+        <div class="view-btns">
             <form action="change_password">
-                <button>Change Password</button>
+                <button class="btn btn-outline-warning btn-sm">Change Password</button>
             </form>
         </div>
-        <a href="{%url 'view_log'%}">View Reading Log</a>
+        <div class="view-btns">
+        <form action="{%url 'view_log'%}">
+            <button class="btn btn-outline-warning btn-sm">View Reading Log</button>
+        </form>
+        </div>
     </div>
 {% endblock %}

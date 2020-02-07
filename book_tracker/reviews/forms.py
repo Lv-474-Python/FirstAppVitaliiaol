@@ -20,6 +20,3 @@ class AddReview(forms.ModelForm):
             instance = None
         return instance
 
-    def populate(self):
-        pass
-

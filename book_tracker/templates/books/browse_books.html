@@ -5,19 +5,41 @@
 {%endblock%}
 
 {%block content%}
+        <div class="container">
         <form method="post">
             {%csrf_token%}
             {%for field in form%}
                 {{field}}
             {%endfor%}
-            <button type="submit">Search</button>
+            <button type="submit" class="btn btn-outline-warning block-btn" class="block-btn">Search</button>
         </form>
-        {%for book in books%}
-            <a href="{%url 'view_book' book.slug%}">{{book}} by
-                {%for author in book.authors.all%}
-                    {{author}}
-                {%endfor%}
-            </a>
+        </div>
+        <div class="container">
+        <table class="table table-bordered" id="books-table">
+            <tbody>
+                {%for book in books%}
+                {%if forloop.counter0|divisibleby:3%} <tr> {%endif%}
+                <td>
+                    <a href="{%url 'view_book' book.slug%}"><span class="bg-warning">{{book}}</span></a> by
+                        {%for author in book.authors.all%}
+                            <a href="{%url 'view_author' author.slug%}"><span class="bg-warning">{{author}}</span></a>
+                            {%if not forloop.last%}
+                                ,
+                            {%endif%}
+                        {%endfor%}
+                        <br>
+                        Rating: {{book.get_average_rating}}
+                        <br>
+                        {{book.get_review_count}} reviews
+                        <br>
+                </td>
+                {%if forloop.counter|divisibleby:3 or forloop.last%} </tr> {%endif%}
         {%endfor%}
-<small><a href="{%url 'add_book'%}">Couldn't find the book? Add it to our site!</a></small>
+            </tbody>
+        </table>
+        </div>
+<div class="container">
+    <p>Couldn't find the book? <br>
+        <a href="{%url 'add_book'%}"><span class="bg-warning">Add it to our site!</span></a></p>
+</div>
 {%endblock%}

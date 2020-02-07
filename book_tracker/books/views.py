@@ -11,7 +11,8 @@ def add_book(request):
         if form.is_valid():
             form.save()
             return redirect('display_books')
-    form = AddBookForm()
+    else:
+        form = AddBookForm()
     context = {'form': form}
     return render(request, 'books/add_book.html', context)
 
@@ -23,7 +24,8 @@ def add_author(request):
         if form.is_valid():
             form.save()
             return redirect('display_books')
-    form = AddAuthorForm()
+    else:
+        form = AddAuthorForm()
     context = {'form': form}
     return render(request, 'books/add_author.html', context)
 
@@ -37,7 +39,7 @@ def display_books(request):
             by_title = form.cleaned_data.get('by_title')
             by_author = form.cleaned_data.get('by_author')
             by_genre = form.cleaned_data.get('by_genre')
-            books = books.filter(title__icontains=by_title, authors__full_name__icontains=by_author)
+            books = books.filter(title__icontains=by_title, authors__full_name__icontains=by_author).distinct()
             if by_genre:
                 books = books.filter(genre=by_genre)
     form = BookSearchForm()
@@ -48,7 +50,8 @@ def display_books(request):
 def view_book(request, slug):
     book = Book.objects.get(slug=slug)
     authors = book.authors.all()
-    return render(request, 'books/view_book.html', {'book': book, 'authors': authors})
+    recent_reviews = book.review_set.order_by('id')[:3]
+    return render(request, 'books/view_book.html', {'book': book, 'authors': authors, 'recent_reviews': recent_reviews})
 
 
 @login_required(login_url='signin')

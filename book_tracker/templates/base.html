@@ -5,12 +5,42 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Karla|Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black&display=swap" rel="stylesheet">
     {% block head %}
     {% endblock %}
 </head>
 <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("a").mouseover(function(){
+            $(this).addClass("text-warning");
+        });
+        $("a").mouseout(function(){
+            $(this).removeClass("text-warning");
+        });
+    });
+    </script>
+    <nav class="navbar navbar-expand-sm bg-warning">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'home'%}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'profile'%}">Profile</a>
+            </li>
+            {%block signout%}
+            <li class="nav_item">
+                <a class="nav-link" href="{%url 'signout'%}">Sign Out</a>
+            </li>
+            {%endblock%}
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'display_books'%}">Browse Books</a>
+            </li>
+        </ul>
+    </nav>
     {% block content %}
     {% endblock %}
 </body>

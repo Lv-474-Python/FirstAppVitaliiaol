@@ -24,7 +24,7 @@ def add_review(request, slug):
             form.user = user
             form.book = book
             form.save()
-            return redirect('home')
+            return redirect('display_books')
     else:
         form = AddReview(instance=instance)
     return render(request, 'reviews/add_review.html', {'form': form, 'book': book})

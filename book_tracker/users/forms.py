@@ -1,6 +1,7 @@
 from django import forms
+from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
-from django.forms import PasswordInput, ValidationError, TextInput
+from django.forms import PasswordInput, ValidationError, TextInput, EmailInput
 from django.contrib.auth.models import User
 
 
@@ -14,15 +15,13 @@ class SignUpForm(forms.Form):
         super(SignUpForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.required = True
+        self.fields['username'].widget = TextInput(attrs={"class": "form-control"})
+        self.fields['email'].widget = EmailInput(attrs={"class": "form-control"})
+        self.fields['password'].widget = PasswordInput(attrs={"class": "form-control"})
+        self.fields['re_password'].widget = PasswordInput(attrs={"class": "form-control"})
 
     class Meta:
         fields = ['username', 'email', 'password', 're_password']
-        widgets = {
-            'username': forms.TextInput(attrs={"class": "form-control"}),
-            'email': forms.EmailInput(attrs={"class": "form-control"}),
-            'password': forms.PasswordInput(attrs={"class": "form-control"}),
-            're_password': forms.PasswordInput(attrs={"class": "form-control"})
-        }
 
     def clean(self):
         super(SignUpForm, self).clean()
@@ -35,7 +34,6 @@ class SignUpForm(forms.Form):
         email = self.cleaned_data.get('email')
         if email and User.objects.filter(email=email).exists():
             raise ValidationError("Looks like somebody's already using this email address")
-        return email
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -52,3 +50,17 @@ class SignInForm(forms.Form):
 
     class Meta:
         fields = ['username', 'password']
+
+    def check_user(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            return user
+        else:
+            raise ValidationError('Invalid login or password. Please, try again!')
+
+    def clean(self):
+        super(SignInForm, self).clean()
+        self.check_user()
+        return self.cleaned_data

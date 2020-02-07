@@ -4,26 +4,30 @@
     <title>Sign Up</title>
 {%endblock%}
 
+{%block signout%}
+    <li class="nav_item">
+        <a class="nav-link" href="{%url 'signin'%}">Sign In</a>
+    </li>
+{%endblock%}
+
 {%block content%}
-    <div class="container">
-    <div class="form-sign">
-        <h2 class="roboto-text">Join Us!</h2>
+        <h2>Join Us!</h2>
+        <div class="container">
         <form method="post">
             {%csrf_token%}
-            {%if form.errors%}
-                {%for key,value in form.errors.items%}
-                    <div class="error-cont"><small class="roboto-text">{{value}}</small></div>
-                {%endfor%}
-            {%endif%}
+            {%for key,value in form.errors.items%}
+                <small class="text-danger">{{value}}</small>
+            {%endfor%}
             {%for field in form%}
                 <p>
-                    <label class="karla-text">{{field.label}}</label><br>
+                    <div class="label-cont">{{field.label}}</div><br>
                     {{field}}
                 </p>
             {%endfor%}
-            <button type="submit">Sign Up</button>
+            <button type="submit" class="btn btn-outline-warning block-btn">Sign Up</button>
         </form>
-        <p id="redirect" class="roboto-text">Already have an account? <br> <a href="{% url 'signin' %}">Sign In!</a></p>
-    </div>
-    </div>
+        </div>
+        <div class="container">
+            <p>Already have an account? <br> <span class="bg-warning"><a href="{% url 'signin' %}">Sign In!</a></span></p>
+        </div>
 {%endblock%}

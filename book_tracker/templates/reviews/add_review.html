@@ -5,13 +5,15 @@
 {%endblock%}
 
 {%block content%}
+    <div class="container">
     <form method="post">
         {%csrf_token%}
         {%for field in form%}
-            {{field.label}} <br>
+            <div class="label-cont">{{field.label}}</div> <br>
             {{field}}
             {{field.errors}}
         {%endfor%}
-        <button type="submit">Submit Review</button>
+        <button type="submit" class="btn btn-outline-warning block-btn">Submit Review</button>
     </form>
+    </div>
 {%endblock%}

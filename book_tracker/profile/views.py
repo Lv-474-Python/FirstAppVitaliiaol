@@ -7,7 +7,8 @@ from .forms import EditUserInfo, EditUserProfile, ChangeUserPassword
 
 @login_required(login_url='signin')
 def view_profile(request):
-    context = {'user': request.user}
+    reviews = request.user.review_set.order_by('id')
+    context = {'user': request.user, 'reviews': reviews}
     return render(request, 'profile/profile.html', context)
 
 
@@ -22,8 +23,9 @@ def edit_profile(request):
             user_profile_form.user = user_info_form
             user_profile_form.save()
             return redirect('profile')
-    info_form = EditUserInfo(instance=request.user)
-    profile_from = EditUserProfile(instance=request.user.userprofile)
+    else:
+        info_form = EditUserInfo(instance=request.user)
+        profile_from = EditUserProfile(instance=request.user.userprofile)
     context = {'info_form': info_form, 'profile_form': profile_from}
     return render(request, 'profile/edit_profile.html', context)
 
